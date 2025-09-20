@@ -1,0 +1,111 @@
+Bài 1
+git init
+Khởi tạo kho Git trong thư mục hiện tại (tạo thư mục ẩn .git/). Từ đây có thể add/commit/push.
+
+git add <file_name>
+Đưa một file cụ thể từ Working Directory vào Staging Area (Index) để chuẩn bị commit.
+
+git add .
+Đưa tất cả thay đổi trong thư mục hiện tại và con của nó (thêm/sửa; không stage file đã xóa nếu phiên bản Git cũ).
+Mẹo an toàn hơn: git add -A sẽ stage cả thêm/sửa/xóa.
+
+git commit -m "message"
+Tạo một ảnh chụp (commit) từ những gì đang ở Staging Area, kèm thông điệp mô tả thay đổi.
+
+Bài 2
+/////////////
+Giả sử tạo mới thư mục lesson-2 và làm các bước sau, có 3 vùng:
+
+WD = Working Directory (file đang nằm ngoài đĩa)
+
+STAGE = Staging Area (đã git add)
+
+HEAD = Commit mới nhất (đã git commit)
+
+Ban đầu thư mục rỗng.
+
+a) Tạo 3 file: file1, file2, file3
+
+WD: file1, file2, file3 (untracked)
+
+STAGE: (trống)
+
+HEAD: (chưa có commit)
+
+git status: Untracked files: file1, file2, file3
+
+b) Chạy git init
+
+WD: file1, file2, file3 (untracked)
+
+STAGE: (trống)
+
+HEAD: (chưa có commit)
+
+Ghi chú: chỉ khởi tạo repo; không thay đổi danh sách file.
+
+c) Chạy git commit -m "init project"
+
+Vì chưa add gì vào STAGE, commit không tạo được.
+
+Kết quả mong đợi:
+
+WD: file1, file2, file3 (untracked)
+
+STAGE: (trống)
+
+HEAD: (chưa có commit)
+
+git báo: nothing to commit, working tree clean (hoặc tương tự)
+
+Muốn có commit, cần git add trước.
+
+d) Chạy git add file1
+
+WD: file1 (tracked, staged nội dung hiện tại), file2, file3 (untracked)
+
+STAGE: file1
+
+HEAD: (chưa có commit)
+
+git status: Changes to be committed: file1 (new file)
+
+e) Chạy git commit -m "add file1"
+
+WD: file1 (tracked), file2, file3 (untracked)
+
+STAGE: (trống)
+
+HEAD: chứa 1 commit với nội dung file1
+
+git log --oneline: hiển thị commit "add file1"
+
+f) Chạy git add file
+
+Nếu ý bài là thêm một file nữa (ví dụ file2) → dùng git add file2.
+Nếu ý bài là thêm tất cả các file còn lại → dùng git add . hoặc khuyến nghị git add -A.
+
+Trường hợp git add file2:
+
+WD: file1 (tracked), file2 (staged), file3 (untracked)
+
+STAGE: file2
+
+HEAD: commit trước chứa file1
+
+Trường hợp git add .:
+
+WD: file1 (tracked), file2 (staged), file3 (staged)
+
+STAGE: file2, file3
+
+HEAD: commit trước chứa file1
+
+Sau bước này, nếu git commit -m "add remaining files":
+
+WD: file1, file2, file3 (đều tracked)
+
+STAGE: (trống)
+
+HEAD: có thêm commit mới chứa file2, file3
+
